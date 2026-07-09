@@ -1,20 +1,15 @@
 import Logo from "../shared/Logo";
-import Search from "../shared/Search";
-import type { Movie } from "../../types";
 
 interface NavBarProps {
-    movies: Movie[];
+    children: React.ReactNode;
 }
 
-function NavBar({ movies }: NavBarProps) {
+function NavBar({ children }: React.PropsWithChildren<NavBarProps>) {
 
     return (
         <nav className="nav-bar">
             <Logo />
-            <Search />
-            <p className="num-results">
-                Found <strong>{movies.length}</strong> results
-            </p>
+            {children}
         </nav>
     )
 }

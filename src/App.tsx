@@ -3,13 +3,18 @@ import MainPage from "./components/layout/MainPage";
 import NavBar from "./components/layout/NavBar";
 import { tempMovieData } from "./data/movies";
 import type { Movie } from "./types";
+import NumResult from "./components/shared/NumResult";
+import Search from "./components/shared/Search";
 
 export default function App() {
   const [movies] = useState<Movie[]>(tempMovieData);
 
   return (
     <>
-      <NavBar movies={movies} />
+      <NavBar>
+        <Search />
+        <NumResult movies={movies} />
+      </NavBar>
       <MainPage movies={movies} />
     </>
   );
