@@ -23,7 +23,7 @@ export default function App() {
         <NumResult movies={movies} />
       </NavBar>
 
-      <StarRating maxRating={5} />
+      <StarRating maxRating={5} size={48} className="text-2xl" />
 
       <MainPage>
         <Box>
