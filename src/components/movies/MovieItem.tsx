@@ -3,11 +3,12 @@ import type { Movie } from "../../types";
 
 interface MovieItemProps {
     movie: Movie;
+    onSelectMovie: (id: string) => void;
 }
 
-function MovieItem({ movie }: MovieItemProps) {
+function MovieItem({ movie, onSelectMovie }: MovieItemProps) {
     return (
-        <li>
+        <li onClick={() => onSelectMovie(movie.imdbID)} >
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{movie.Title}</h3>
             <div>
