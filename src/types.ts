@@ -5,8 +5,25 @@ export interface Movie {
   Poster: string;
 }
 
-export interface WatchedMovie extends Movie {
+export interface WatchedMovie {
+  imdbId: string;
+  title: string;
+  year: string;
+  poster: string;
   runtime: number;
   imdbRating: number;
   userRating: number;
+}
+
+export interface MovieDetailsData {
+  Title: string;
+  Year: string;
+  Poster: string;
+  Runtime: string;
+  imdbRating: string;
+  Plot: string;
+  Released: string;
+  Actors: string;
+  Director: string;
+  Genre: string;
 }
