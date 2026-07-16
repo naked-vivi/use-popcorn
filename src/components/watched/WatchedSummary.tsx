@@ -5,7 +5,7 @@ interface WatchedSummaryProps {
 }
 
 const average = (arr: number[]): number =>
-    arr.reduce((acc, cur) => acc + cur / arr.length, 0);
+    arr.length === 0 ? 0 : arr.reduce((acc, cur) => acc + cur / arr.length, 0);
 
 function WatchedSummary({ watched }: WatchedSummaryProps) {
     const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
@@ -22,15 +22,15 @@ function WatchedSummary({ watched }: WatchedSummaryProps) {
                 </p>
                 <p>
                     <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
+                    <span>{avgImdbRating.toFixed(2)}</span>
                 </p>
                 <p>
                     <span>🌟</span>
-                    <span>{avgUserRating}</span>
+                    <span>{avgUserRating.toFixed(2)}</span>
                 </p>
                 <p>
                     <span>⏳</span>
-                    <span>{avgRuntime} min</span>
+                    <span>{avgRuntime.toFixed(0)} min</span>
                 </p>
             </div>
         </div>
