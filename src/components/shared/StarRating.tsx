@@ -6,17 +6,19 @@ interface StarRatingProps {
     color?: string;
     size?: number;
     className?: string;
+    onSetRating?: (rating: number) => void;
 }
 
-function StarRating({ maxRating = 5, color = "#fcc419", size = 48, className = "" }: StarRatingProps) {
+function StarRating({ maxRating = 5, color = "#fcc419", size = 48, className = "", onSetRating }: StarRatingProps) {
     const [rating, setRating] = useState(0)
     const [tempRating, setTempRating] = useState(0)
 
     function handleRating(selectedRating: number) {
         setRating(selectedRating)
+        onSetRating?.(selectedRating)
     }
     return (
-        <div className={`container mx-auto w-100 h-50 flex items-center gap-4 size-14`}>
+        <div className={`container mx-auto w-100 h-20 flex items-center gap-4 size-14`}>
             <div className="flex gap-2">
                 {Array.from({ length: maxRating }, (_, i) =>
                     <Star
