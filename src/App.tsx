@@ -19,7 +19,7 @@ const KEY = `1a6da5d7`
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [watched] = useState<WatchedMovie[]>([]);
+  const [watched, setWatched] = useState<WatchedMovie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("")
   const [query, setQuery] = useState<string>("")
@@ -33,13 +33,30 @@ export default function App() {
     setSelectedId(null)
   }
 
+  function handleAddWatched(movie: WatchedMovie) {
+    setWatched(watched => [...watched, movie])
+  }
+
+  function handleDeleteWatched(id: string) {
+    setWatched((watched) => watched.filter(movie => movie.imdbId !== id))
+  }
+
+  function handleQueryChange(query: string) {
+    setQuery(query);
+
+    if (!query.trim()) {
+      setMovies([]);
+      setError("");
+    }
+  }
+
   useEffect(() => {
     async function fetchMovies() {
       try {
         setIsLoading(true);
         setError('')
 
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+        const res = await fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
 
         if (!res.ok)
           throw new Error("Something went wrong with fetching movies.")
@@ -64,13 +81,18 @@ export default function App() {
         setIsLoading(false);
       }
     }
+
+    if (!query.trim()) {
+      return;
+    }
+
     fetchMovies();
   }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search query={query} setQuery={setQuery} />
+        <Search query={query} setQuery={handleQueryChange} />
         <NumResult movies={movies} />
       </NavBar>
 
@@ -86,11 +108,17 @@ export default function App() {
 
         <Box>
           {selectedId ? (
-            <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie} />
+            <MovieDetails
+              selectedId={selectedId}
+              onCloseMovie={handleCloseMovie}
+              onAddWatched={handleAddWatched}
+              watched={watched}
+
+            />
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedList watched={watched} />
+              <WatchedList watched={watched} onDeleteWatched={handleDeleteWatched} />
             </>
           )}
         </Box>
