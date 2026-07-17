@@ -41,6 +41,20 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: Movie
         }
     }, [movie])
 
+    useEffect(() => {
+        function callback(e: KeyboardEvent) {
+            if (e.code === 'Escape') {
+                onCloseMovie();
+            }
+        }
+
+        document.addEventListener('keydown', callback)
+
+        return () => {
+            document.removeEventListener('keydown', callback)
+        }
+    }, [onCloseMovie])
+
     if (!movie) return <p className="loader">Loading...</p>
 
     const {
