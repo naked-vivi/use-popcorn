@@ -19,11 +19,15 @@ const KEY = `1a6da5d7`
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [watched, setWatched] = useState<WatchedMovie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("")
   const [query, setQuery] = useState<string>("")
   const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  const [watched, setWatched] = useState<WatchedMovie[]>(() => {
+    const storedValue = localStorage.getItem("watched")
+    return storedValue ? JSON.parse(storedValue) : []
+  });
 
   function handleSelectMovie(id: string) {
     setSelectedId((selectedId) => (id === selectedId ? null : id))
@@ -49,6 +53,10 @@ export default function App() {
       setError("");
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched))
+  }, [watched])
 
   useEffect(() => {
     const controller = new AbortController();
