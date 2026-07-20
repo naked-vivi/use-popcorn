@@ -3,6 +3,7 @@ import StarRating from "../shared/StarRating";
 import Loader from "../shared/Loader";
 import type { WatchedMovie } from "../../types";
 import type { MovieDetailsData } from "../../types";
+import { useKey } from "../custom-hooks/useKey";
 
 interface MovieDetailsProp {
     selectedId: string;
@@ -20,6 +21,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: Movie
 
     const countRef = useRef(0);
 
+    //bts click track
     useEffect(() => {
         if (userRating)
             countRef.current++
@@ -48,19 +50,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: Movie
         }
     }, [movie])
 
-    useEffect(() => {
-        function callback(e: KeyboardEvent) {
-            if (e.code === 'Escape') {
-                onCloseMovie();
-            }
-        }
-
-        document.addEventListener('keydown', callback)
-
-        return () => {
-            document.removeEventListener('keydown', callback)
-        }
-    }, [onCloseMovie])
+    useKey("Escape", onCloseMovie)
 
     if (!movie) return <p className="loader">Loading...</p>
 
