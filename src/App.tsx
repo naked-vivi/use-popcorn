@@ -14,7 +14,7 @@ import WatchedSummary from "./components/watched/WatchedSummary";
 import Loader from "./components/shared/Loader";
 import ErrorMessage from "./components/shared/ErrorMessage";
 import MovieDetails from "./components/movies/MovieDetails";
-import { useMovie } from "./components/movies/useMovie";
+import { useMovie } from "./components/custom-hooks/useMovie";
 
 // const KEY = `1a6da5d7`
 
